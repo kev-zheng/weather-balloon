@@ -4,11 +4,14 @@
 
 def mk_float(s):
     s = s.strip()
-    return float(s) if s else 0
+    try:
+        return float(s)
+    except ValueError:
+        return 0
 
 #  get_time returns an array in the format
 #  of [ hours, minutes, seconds ]
-def get_time(line):
+def get_gps_time(line):
     time = round(float(line[1]))
     seconds = time % 100
     time //= 100
@@ -38,5 +41,15 @@ def get_alt(line):
 
 
 def process_gps(line):
-    gps = get_time(line)
+    gps = get_gps_time(line)
     gps += [get_alt(line), get_lon(line), get_alt(line)]
+
+
+def check_gps(line):
+    list = line.strip().split(',')
+    if list[0] == "$GPGGA" and \
+       len(list) >= 10 and \
+       list[3] == 'N' and \
+       list[5] == 'W':
+        return True
+    return False

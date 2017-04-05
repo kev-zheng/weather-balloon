@@ -15,7 +15,7 @@ sensor_data = []
 # Process GPGGA and sensor data
 for line in data:
     data_list = line.strip().split(',')
-    if data_list[0] == "$GPGGA" and len(data_list) == 15:
+    if data_list[0] == "$GPGGA" and data_list[] and len(data_list) == 15:
         gpgga.append(process_gps(data_list))
     elif data_list[0] == "SENSORS" and len(data_list) == 10:
         sensor_data.append(data_list)
